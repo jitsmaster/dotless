@@ -15,7 +15,7 @@ properties {
     $assemblyVersion = $version.Split('-')[0] + "." + $build_number
 }
 
-task default -depends Release
+task default -depends Release-NoTest
 
 task Clean {
     remove-item -force -recurse $build_dir -ErrorAction SilentlyContinue 

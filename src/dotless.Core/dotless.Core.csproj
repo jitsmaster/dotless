@@ -226,6 +226,7 @@
     <Compile Include="Input\IFileReader.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Loggers\ConsoleLogger.cs" />
+    <Compile Include="Remote\RemoteReader.cs" />
     <Compile Include="Stylizers\ConsoleStylizer.cs" />
     <Compile Include="Stylizers\HtmlStylizer.cs" />
     <Compile Include="Stylizers\IStylizer.cs" />
@@ -261,6 +262,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <CsharpTargetsInMsBuildToolsPath>$(MSBuildToolsPath)\Microsoft.CSharp.targets</CsharpTargetsInMsBuildToolsPath>
     <CsharpTargetsInMsBuildBinPath>$(MSBuildBinPath)\Microsoft.CSharp.targets</CsharpTargetsInMsBuildBinPath>
