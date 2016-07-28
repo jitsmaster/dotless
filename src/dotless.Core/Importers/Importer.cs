@@ -79,7 +79,7 @@ namespace dotless.Core.Importers
 		/// <summary>
 		///  Whether a url has a protocol on it
 		/// </summary>
-		private static bool IsProtocolUrl(string url)
+		public static bool IsProtocolUrl(string url)
 		{
 			return Regex.IsMatch(url, @"^([a-zA-Z]{2,}:)");
 		}

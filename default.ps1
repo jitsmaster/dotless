@@ -2,7 +2,7 @@
 include .\psake_ext.ps1
 
 properties {
-    $config = 'release'
+    $config = 'debug'
     $showtestresult = $FALSE
     $base_dir = resolve-path .
     $lib_dir = "$base_dir\lib\"
@@ -15,7 +15,7 @@ properties {
     $assemblyVersion = $version.Split('-')[0] + "." + $build_number
 }
 
-task default -depends Release-NoTest
+task default -depends Release
 
 task Clean {
     remove-item -force -recurse $build_dir -ErrorAction SilentlyContinue 
@@ -197,7 +197,7 @@ task Merge -depends Build {
     cd $old
 }
 
-task Release-NoTest -depends Merge, NuGetPackage, NuGetClientOnlyPackage, t4css {
+task Release-NoTest -depends Build, NuGetPackage, NuGetClientOnlyPackage, t4css {
     $commit = Get-Git-Commit
     $filename = "dotless.core"
     & $base_dir\src\packages\7-Zip.CommandLine.9.20.0\tools\7za.exe a $release_dir\dotless-$commit.zip `
@@ -256,7 +256,8 @@ exit 1 unless result"
     gem build dotless.gemspec
 }
 
-task Release -depends Test, Merge, NuGetPackage, NuGetClientOnlyPackage, t4css {
+task Release -depends Build, NuGetPackage {
+Write-Host "RELEASE BUILD!!!"
     $commit = Get-Git-Commit
     $filename = "dotless.core"
     & $base_dir\src\packages\7-Zip.CommandLine.9.20.0\tools\7za.exe a $release_dir\dotless-$commit.zip `
@@ -277,7 +278,7 @@ task Release -depends Test, Merge, NuGetPackage, NuGetClientOnlyPackage, t4css {
 }
 
 
-task NuGetPackage -depends Merge {
+task NuGetPackage -depends Build {
     $target = "$build_dir\NuGet\"
     remove-item -force -recurse $target -ErrorAction SilentlyContinue     
     New-Item $target -ItemType directory
@@ -291,13 +292,17 @@ task NuGetPackage -depends Merge {
     Copy-Item $build_dir\dotless.Core.pdb $target\lib\
     Copy-Item $build_dir\dotless.compiler.exe $target\tool\
     Copy-Item $build_dir\dotless.compiler.pdb $target\tool\
+	Copy-Item $build_dir\Pandora.dll $target\lib\
+	Copy-Item $build_dir\Microsoft.Practices.ServiceLocation.dll $target\lib\
+	Copy-Item $build_dir\dotless.AspNet.dll $target\lib\	
+	Copy-Item $build_dir\dotless.AspNet.pdb $target\lib\	
     Copy-Item acknowledgements.txt $target
     Copy-Item license.txt $target
         
     & "$source_dir\.nuget\NuGet.exe" pack $target\Dotless.nuspec -o $build_dir
 }
 
-task NuGetClientOnlyPackage -depends Merge {
+task NuGetClientOnlyPackage -depends Build {
     $target = "$build_dir\NuGetClientOnly\"
     remove-item -force -recurse $target -ErrorAction SilentlyContinue     
     New-Item $target -ItemType directory

@@ -25,7 +25,9 @@ namespace dotless.Core.Cache
 
             if (_reader.UseCacheDependencies)
             {
-                var fullPaths = fileDependancies.Select(f => PathResolver.GetFullPath(f)).ToArray();
+                var fullPaths = fileDependancies
+					.Where(f => !Importers.Importer.IsProtocolUrl(f))
+					.Select(f => PathResolver.GetFullPath(f)).ToArray();
 
                 _http.Context.Response.AddFileDependencies(fullPaths);
 

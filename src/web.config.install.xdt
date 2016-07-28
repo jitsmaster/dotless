@@ -8,13 +8,13 @@
 
 	<system.webServer xdt:Transform="InsertIfMissing">
 		<handlers xdt:Transform="InsertIfMissing">
-			<add name="dotless" path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler,dotless.Core" resourceType="File" preCondition="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+			<add name="dotless" path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler,dotless.AspNet" resourceType="File" preCondition="" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
 		</handlers>
 	</system.webServer>
 
 	<system.web xdt:Transform="InsertIfMissing">
 		<httpHandlers xdt:Transform="InsertIfMissing">
-			<add path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler, dotless.Core" xdt:Transform="InsertIfMissing" xdt:Locator="Match(path, verb)" />
+			<add path="*.less" verb="GET" type="dotless.Core.LessCssHttpHandler, dotless.AspNet" xdt:Transform="InsertIfMissing" xdt:Locator="Match(path, verb)" />
 		</httpHandlers>
 	</system.web>
 </configuration>
